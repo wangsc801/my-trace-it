@@ -1,2 +1,17 @@
 .claude/
 claude-session.txt
+
+# Dependencies & build output
+node_modules/
+frontend/build/
+frontend/.react-router/
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# Environment files (keep the example)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
