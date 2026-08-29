@@ -10,7 +10,8 @@ RUN bun install --frozen-lockfile
 # avoid bun for this step.
 FROM node:24-alpine AS build
 WORKDIR /app
-ARG VITE_API_BASE_URL=http://localhost:8833
+# 同源（空）：nginx 已在同一端口反代 /api 到后端，base 留空即可适配任意访问域名/IP
+ARG VITE_API_BASE_URL=
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL

@@ -13,8 +13,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    ports:
-      - "5432:5432"
+    # 不对外发布端口：backend 在 Docker 网络内以 db:5432 访问，宿主 5432 常被本机
+    # PostgreSQL 占用。若需在宿主直连，用 docker compose exec db psql ...。
 
   backend:
     build: ./backend
@@ -36,8 +36,10 @@ services:
   frontend:
     build:
       context: ./frontend
+      # 默认同源（空），nginx 在同一端口把 /api 反代到后端。
+      # 仅当 /api 反代不可用、需直连后端时才设置具体后端地址。
       args:
-        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8833}
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-}
     restart: unless-stopped
     depends_on:
       - backend

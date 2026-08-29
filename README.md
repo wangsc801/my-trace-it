@@ -152,11 +152,11 @@ ADMIN_PASSWORD=你的管理密码 docker compose up -d --build
 | `POSTGRES_PASSWORD` | `postgres` | 数据库密码（db） |
 | `POSTGRES_DB` | `my_trace_it` | 数据库名（db） |
 | `JWT_SECRET` | 默认 48 字符值 | JWT 密钥（backend，注意改为随机值） |
-| `VITE_API_BASE_URL` | `http://localhost:8833` | 前端构建时注入的后端地址 |
+| `VITE_API_BASE_URL` | 空（同源） | 前端构建时注入的后端地址；留空即同源，nginx 在同一端口把 `/api` 反代到后端 |
 
-> `VITE_API_BASE_URL` 是按**本机访问**场景写死的默认值。若换域名/服务器访问，需在构建后端到地址写入镜像：
+> 默认**留空**（同源），前端 nginx 在同一端口把 `/api/*` 反代到后端容器，因此通过任何访问域名/IP（`localhost` 或局域网地址）都能正常工作、无跨域。仅当不使用该反代、需前端直连一个独立后端时才设置具体地址，例如：
 > ```bash
-> docker compose build --build-arg VITE_API_BASE_URL=http://你的后端地址:8833 frontend
+> docker compose build --build-arg VITE_API_BASE_URL=http://你的后端地址:8832 frontend
 > docker compose up -d
 > ```
 
