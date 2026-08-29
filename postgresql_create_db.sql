@@ -1,0 +1,1 @@
+CREATE DATABASE my_trace_it WITH ENCODING 'UTF8' LC_COLLATE = 'zh_CN.utf8' LC_CTYPE = 'zh_CN.utf8' TEMPLATE = template0;
